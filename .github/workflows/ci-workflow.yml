@@ -22,9 +22,12 @@ jobs:
         run: |
           flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
           flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-      - name: Run Vulture
-        run: vulture
-      - name: Run tests
+      - name: Run vulture
+        run: vulture formation_indus_ds_avancee/
+      - name: Run test
         run: pytest
+      - name: Run test
+        run: pytest
+
 
 
