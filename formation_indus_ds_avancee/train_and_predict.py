@@ -21,15 +21,12 @@ def train_model(features: pd.DataFrame, model_registry_folder: str) -> None:
         mlflow.sklearn.autolog()
         model = RandomForestRegressor(n_estimators=1, max_depth=10, n_jobs=1)
         model.fit(X, y)
+        # Log the sklearn model and register as version 1
+        mlflow.sklearn.log_model(
+            sk_model=model,
+            artifact_path=model_registry_folder)
     time_str = time.strftime('%Y%m%d-%H%M%S')
     joblib.dump(model, os.path.join(model_registry_folder, time_str + '.joblib'))
-    
-    # Log the sklearn model and register as version 1
-    mlflow.sklearn.log_model(
-        sk_model=model,
-        artifact_path=model_registry_folder,
-        registered_model_name=time_str + '.joblib',
-    )
 
 
 def predict_with_io(features_path: str, model_path: str, predictions_folder: str) -> None:
